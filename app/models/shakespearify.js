@@ -1,19 +1,17 @@
-import request from 'request'
+import request from 'request-promise-native'
 
-export const makeShakespeareRequest = async (text) => {
+export const makeShakespeareRequest = text => {
     const api = 'https://api.funtranslations.com/translate/shakespeare.json'
-    const body = JSON.stringify({ text })
+    const body = { text }
     const options = {
         uri: api,
         body,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        json: true
     }
 
-    request(options, (err, res) => {
-        console.log(`response: ${JSON.stringify(res)}`)
-
-    })
+    return request(options)
 }

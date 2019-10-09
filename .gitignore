@@ -1,5 +1,6 @@
 # package directories
 node_modules
+node_modules 13.29.38/
 
 # builds
 lib
@@ -10,3 +11,5 @@ coverage
 
 # local files
 .env
+
+.DS_Store

@@ -1,14 +1,24 @@
-import router from 'express'
+import { Router } from 'express'
 import { getPokemonRequest } from './../app/models/getPokemon'
+import Joi from '@hapi/joi'
 
-// TODO validate param
+const router = Router()
 
-router.get('/pokemon/:pokemon',  function(req, res) {
-    if (!name) { return res.sendStatus(404) }
-    
-    req.name = name
-    const result = getPokemonRequest(name)
-    return res.status(200).json(result)
-  })
+const schema = Joi.object().keys({
+  name: Joi.string().required(),
+})
+
+router.get('/pokemon/:name', async (req, res) => {
+  const name = req.params.name
+  if (!name) { return res.sendStatus(404) }
+
+  const { error } = schema.validate({name})
+  if (error) {
+    return res.status(404).json(error)
+  }
+    const result = await getPokemonRequest(name)
+
+    return res.json(result)
+})
   
-export { pokemonRouter }
+export { router }

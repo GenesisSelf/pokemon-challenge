@@ -1,6 +1,6 @@
-import * as express from 'express'
+import express from 'express'
 import bodyParser from 'body-parser'
-import { router as pokemonRouter } from './routes/pokemon'
+import { router } from './routes/pokemon'
 
 const app = express()
 
@@ -9,17 +9,13 @@ app.use(bodyParser.json())
 
 const port = process.env.PORT || 5000
 
-express.router.get('/pokemon/:pokemon', function(req, res) {
-    res.json({ message: `Shakespearean pokemon flavor text: ${res}`})
-})
+app.use(router)
 
-app.use(function(req, res) {
-    const err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-  });
-
-app.use(pokemonRouter)
+app.use(function(req, res, next) {
+    const err = new Error('Not Found')
+    err.status = 404
+    next(err)
+  })
 
 app.listen(port)
-console.log('Magic happens on port ' + port)
+console.log('Running on port ' + port)
