@@ -1,0 +1,12 @@
+# package directories
+node_modules
+
+# builds
+lib
+
+# tests
+coverage
+.nyc_output
+
+# local files
+.env
